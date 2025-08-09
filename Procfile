@@ -1,1 +1,2 @@
-web: gunicorn Bakery:app
+web: gunicorn wsgi:app
+
