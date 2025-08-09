@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="mt-3 pt-2">
+
+    <div class="row">
+        <div class="col-9">
+            <div class="card shadow">
+                <div class="card-header fw-bold text-center">
+                    Uzalishaji
+                </div>
+                <div class="card-body">
+                    <table class="table border border-dark">
+                        <tr>
+                            <th>Tarehe</th>
+                            <th>Bidhaa</th>
+                            <th>Idadi ya Bidhaa</th>
+                         
+
+                        </tr>
+                        {% if uzaldisp %}
+                        {% for uzal in uzaldisp %}
+                        <tr>
+                            <td>{{ uzal.date }}</td>
+                            <td>{{ uzal.bid.b_name }}</td>
+                            <td>{{ uzal.b_jumla }}</td>
+                       
+                            
+                        </tr>
+                        {% endfor %}
+                        {% endif %}
+
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="card">
+                <div class="card-header text-center fw-bold">
+                    Ingiza Bidhaa Zilizotoka Sasa
+                </div>
+                <div class="card-body">
+
+                    <form action="" method="post" class="p-2">
+                        {{form.hidden_tag()}}
+                        <div class="mb-3">
+                            {{form.bid.label(class="form-label")}}
+                            {{form.bid(class="form-control")}}
+                        </div>
+                        <div class="mb-3">
+                            {{form.jumla.label(class="form-label")}}
+                            {{form.jumla(class="form-control")}}
+                        </div>
+                       
+                        <div>
+                            {{form.submit(class="btn btn-primary ")}}
+
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+{% endblock content %}

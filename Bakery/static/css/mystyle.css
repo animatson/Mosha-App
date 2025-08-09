@@ -1,0 +1,86 @@
+/* Custom sidebar styling */
+.sidebar {
+  width: 250px;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #4e73df 10%, #224abe 100%);
+  background-size: cover;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  transition: width 0.3s ease;
+  overflow-y: auto;
+}
+
+/* Sidebar dark text and links */
+.sidebar a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.sidebar .nav-link {
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+}
+
+.sidebar .nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+/* Active state */
+.sidebar .nav-item.active .nav-link {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+/* Sidebar brand styling */
+.sidebar-brand {
+  font-size: 1.25rem;
+  padding: 1rem 1rem;
+  display: block;
+  text-align: center;
+  color: #fff;
+}
+
+/* Collapse inner menu items */
+.collapse-inner .collapse-item {
+  padding: 0.5rem 1rem;
+  color: #6e707e;
+  font-size: 0.875rem;
+}
+
+.collapse-inner .collapse-item:hover {
+  color: #3a3b45;
+  background-color: #f8f9fc;
+  text-decoration: none;
+}
+
+/* Optional: Rounded collapse inner */
+.collapse-inner {
+  border-left: 4px solid #4e73df;
+}
+
+/* Hide scrollbar but keep scroll functionality */
+.sidebar::-webkit-scrollbar {
+  display: none;
+}
+.sidebar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+/* Responsive adjustments */
+ .content-wrapper {
+      margin-left: 250px;
+      width: calc(100% - 250px);
+    }
+
+    .topbar {
+      width: 100%;
+    }
+
+    .img-profile {
+      width: 32px;
+      height: 32px;
+    }

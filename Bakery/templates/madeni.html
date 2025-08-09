@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="mt-4 ">
+
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <div class="fw-bold">Madeni</div>
+            <div>
+                <a href="" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#addMadeniForm"
+                    aria-expanded="false" aria-controls="addMadeniForm">Open/Close</a>
+                <div class="collapse {{ 'show' if collapse else '' }}" id="addMadeniForm">
+                    <form action="" method="post">
+                        {{ form.hidden_tag() }}
+                        <div class="mb-3">
+                            {{ form.bidhaa.label(class="form-label") }}
+                            {{ form.bidhaa(class="form-select") }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form.idadi.label(class="form-label") }}
+                            {{ form.idadi(class="form-select") }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form.kiasi_kalipa.label(class="form-label") }}
+                            {{ form.kiasi_kalipa(class="form-control") }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form.name.label(class="form-label") }}
+                            {{ form.name(class="form-control") }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form.phone.label(class="form-label") }}
+                            {{ form.phone(class="form-control") }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form.submit(class="btn btn-primary") }}
+                        </div>
+
+                        {% if form.errors %}
+                        <div class="alert alert-danger">
+                            {% for error in form.errors %}
+                            <span class="text-danger">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>Tarehe</th>
+                        <th>Majina</th>
+                        <th>Simu</th>
+                        <th>Bidhaa</th>
+                        <th>Bei (Tsh)</th>
+                        <th>Idadi </th>
+                        <th>Jumla (Tsh)</th>
+                        <th>Kiasi-Kilicholipwa</th>
+                        <th>Kiasi-Kilichobaki</th>
+                        <th>Status</th>
+                        <th>Nalipa</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for customer in md %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ customer.date }}</td>
+                        <td>{{ customer.name }}</td>
+                        <td>{{ customer.phone }}</td>
+                        <td>{{ customer.bid.b_name }}</td>
+                        <td>{{ customer.bid.b_bei }}</td>
+                        <td>{{customer.status}}</td>
+                        <td>{{customer.status * customer.bid.b_bei}}</td>
+                        <td>{{ customer.kiasi_kalipa }}</td>
+                        <td>{{ customer.kiasi_baki }}</td>
+                        {% if customer.kiasi_baki == 0 %}
+                        <td class="text-primary">Amelipa</td>
+                        {% else %}
+                        <td class="text-warning">Anadaiwa</td>
+                        <td><a href="/lipa/{{customer.id}}">Lipa</a></td>
+                        {% endif %}
+                        
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</section>
+{% endblock content %}

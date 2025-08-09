@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="mt-4">
+    <div class="container d-flex justify-content-center">
+        <form action="" method="post" class="w-50 ">
+            {{form.hidden_tag()}}
+            <div class="mb-3">
+                {{form.aina.label(class="form-label")}}
+                {{form.aina(class="form-control")}}
+                {% if form.aina.errors %}
+                <div class="invalid-feedback">
+                    {% for error in form.aina.errors %}
+                    <span class="text-warning">{{error}}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            <div class="mb-3">
+                {{form.kiasi.label(class="form-label")}}
+                {{form.kiasi(class="form-control")}}
+                {% if form.kiasi.errors %}
+                <div class="invalid-feedback">
+                    {% for error in form.kiasi.errors %}
+                    <span class="text-warning">{{error}}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            {{form.submit()}}
+        </form>
+    </div>
+</section>
+{% endblock content %}

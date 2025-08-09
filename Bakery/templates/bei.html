@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="mt-4 ">
+    <div class="container d-flex justify-content-center">
+                <div class="card w-50">
+                    <div class="card-header fw-bold">
+                        Ingiza  Bei Mpya Ya Bidhaa
+                    </div>
+                    <div class="card-body ">
+                        <form action="" method="post" >
+                            {{form.hidden_tag()}}
+                            
+                            <div class="mb-4">
+                                {{form.bei.label(class="form-label ")}}
+                                {{form.bei(class="form-control")}}
+                                {% if form.bei.errors %}
+                                <div class="invalid-feedback">
+                                    {% for error in form.bei.errors %}
+                                    <span class="text-warning">{{error}}</span>
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div>
+                                {{form.submit(class="btn btn-primary mt-3")}}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+</section>
+{% endblock content %}

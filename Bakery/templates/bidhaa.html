@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="mt-4 ">
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+                <div class="card shadow">
+                    <div class="card-header fw-bold">
+                        Bidhaa Zilizopo (2025)
+                    </div>
+                    <div class="card-body">
+
+
+                        <table class="table table-striped">
+                            <tr>
+                                <th>Jina La Bidhaa</th>
+                                <th>Bei ya Bidhaa</th>
+                                <th>Mabadiliko</th>
+                            </tr>
+                            {% if bid %}
+                            {% for bd in bid %}
+                            <tr>
+                                <td>{{ bd.b_name }}</td>
+                                <td>{{ bd.b_bei }}</td>
+                                <td><a href="/B_bei/{{bd.id}}" class="text-primary">Badili</a></td>
+                            </tr>
+                            {% endfor %}
+                            {% endif %}
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-header fw-bold">
+                        Ingiza Bidhaa Na Bei yake
+                    </div>
+                    <div class="card-body">
+                        <form action="" method="post">
+                            {{form.hidden_tag()}}
+                            <div class="mb-3">
+                                {{form.bidhaa.label(class="form-label ")}}
+                                {{form.bidhaa(class="form-control")}}
+                                {% if form.bidhaa.errors %}
+                                <div class="invalid-feedback">
+                                    {% for error in form.bidhaa.errors %}
+                                    <span class="text-warning">{{error}}</span>
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div>
+                                {{form.bei.label(class="form-label ")}}
+                                {{form.bei(class="form-control")}}
+                                {% if form.bei.errors %}
+                                <div class="invalid-feedback">
+                                    {% for error in form.bei.errors %}
+                                    <span class="text-warning">{{error}}</span>
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div>
+                                {{form.submit(class="btn btn-primary mt-3")}}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

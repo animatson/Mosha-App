@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="mt-3 pt-2">
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+                <div class="card shadow">
+                    <div class="card-header fw-bold text-center">
+                        Mauzo Ya Kila Siku
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <tr>
+                                <th>Tarehe</th>
+                                <th>Bidhaa</th>
+                                <th>Bei</th>
+                                <th>Bidhaa Zilizotoka</th>
+                                <th>Bidhaa Zilizopo</th>
+                                <th>Tsh</th>
+                                
+                            </tr>
+                            {% if mzdisp %}
+                            {% for mz in mzdisp %}
+                            <tr>
+                                
+                                <td>{{ mz.date }}</td>
+                                <td>{{ mz.bid.b_name }}</td>
+                                <td>{{ mz.bid.b_bei }}</td>
+                                <td>{{ mz.b_uza}}</td>
+                                <td>{{mz.jumla}}</td>
+                                <td>{{ mz.b_bei_uza }}</td>
+                                
+                            </tr>
+                            {% endfor %}
+                            {% endif %}
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-header text-center fw-bold">
+                        Ingiza Bidhaa Zilizotoka Sasa
+                    </div>
+                    <div class="card-body">
+
+                        <form action="" method="post" class="p-2">
+                            {{form.hidden_tag()}}
+                            <div class="mb-3">
+                                {{form.bid.label(class="form-label")}}
+                                {{form.bid(class="form-control")}}
+                            </div>
+                            <div class="mb-3">
+                                {{form.b_uza.label(class="form-label")}}
+                                {{form.b_uza(class="form-control")}}
+                            </div>
+                            <div>
+                                {{form.submit(class="btn btn-primary ")}}
+
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

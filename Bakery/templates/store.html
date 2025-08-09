@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="mt-3 pt-2">
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+                <div class="card shadow">
+                    <div class="card-header fw-bold text-center">
+                        Taarifa Ya Store
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <tr>
+                                <th>Tarehe</th>
+                                <th>Maligafi </th>
+                                <th>Units</th>
+                                <th>Idadi</th>
+                                
+                                <th>Marekebisho</th>
+                            </tr>
+                            {% if strdsp %}
+                            {% for st in strdsp %}
+                            <tr>
+                                <td>{{ st.date }}</td>
+                                <td>{{ st.maligafi }}</td>
+                                <td>{{ st.units }}</td>
+                                <td>{{ st.idadi }}</td>
+                                
+                                <td><a href="#" class="text-primary">Badili</a></td>
+                            </tr>
+                            {% endfor %}
+                            {% endif %}
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-header text-center fw-bold">
+                        Ingiza Taarifa Mpya Ya Store
+                    </div>
+                    <div class="card-body">
+                        <form action="" method="post" class="p-2">
+                            {{form.hidden_tag()}}
+                            <fieldset class="form-group">
+                                <div class="mb-4">
+                                    {{form.maligafi.label(class="form-control-label")}}
+                                    {% if form.maligafi.errors %}
+                                    <div>
+                                        {{form.maligafi(class="form-control-label is-invalid")}}
+                                    </div>
+                                    <div class="invalid=feedback">
+                                        {% for error in form.maligafi.errors %}
+                                        <span class="text-warning"> {{error}}</span>
+                                        {% endfor %}
+                                    </div>
+                                    {% else %}
+                                    {{form.maligafi(class="form-control")}}
+                                    {% endif%}
+
+                                </div>
+                                <div class="mb-4">
+
+                                    {{form.unit.label(class="form-control-label")}}
+                                    {% if form.unit.errors %}
+                                    <div>
+                                        {{form.unit(class="form-control-label is-invalid")}}
+                                    </div>
+                                    <div class="invalid=feedback">
+                                        {% for error in form.unit.errors %}
+                                        <span class="text-warning"> {{error}}</span>
+                                        {% endfor %}
+                                    </div>
+                                    {% else %}
+                                    {{form.unit(class="form-control")}}
+                                    {% endif%}
+
+                                </div>
+                                <div class="mb-4">
+
+                                    {{form.idadi.label(class="form-control-label")}}
+                                    {% if form.idadi.errors %}
+                                    <div>
+                                        {{form.idadi(class="form-control-label is-invalid")}}
+                                    </div>
+                                    <div class="invalid=feedback">
+                                        {% for error in form.idadi.errors %}
+                                        <span class="text-warning"> {{error}}</span>
+                                        {% endfor %}
+                                    </div>
+                                    {% else %}
+                                    {{form.idadi(class="form-control")}}
+                                    {% endif%}
+                                </div>
+
+
+                                <div>
+                                    {{form.submit(class="btn btn-primary mt-2")}}
+                                </div>
+                            </fieldset>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+</section>
+{% endblock content %}
