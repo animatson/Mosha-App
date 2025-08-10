@@ -60,7 +60,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=150), nullable=False),
     sa.Column('email', sa.String(length=150), nullable=False),
-    sa.Column('is_active', sa.Boolean(), server_default=sa.text('0'), nullable=False),
+    sa.Column('is_active', sa.Boolean(), server_default=sa.text('FALSE'), nullable=False),
     sa.Column('position_as', sa.String(length=150), nullable=True),
     sa.Column('phone_no', sa.String(length=20), server_default='0000000000', nullable=False),
     sa.Column('password', sa.String(length=150), nullable=False),
