@@ -8,7 +8,7 @@ def load_user(user_id):
     return User.query.get(user_id)
 
 class User(db.Model, UserMixin):
-    __tablename__ = 'user'
+    __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(150), nullable=False)
     email = db.Column(db.String(150), unique=True, nullable=False)
@@ -30,7 +30,7 @@ class ManunuziData(db.Model):
     unit = db.Column(db.String(50), nullable=True)
     idadi = db.Column(db.Integer, nullable=False)
     bei = db.Column(db.Integer, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id', name='fk_manunuzi_user_id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id', name='fk_manunuzi_user_id'), nullable=False)
 
 class Bidhaa(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -46,7 +46,7 @@ class Store(db.Model):
     maligafi = db.Column(db.String(50), nullable=False)
     units = db.Column(db.String(50), nullable=True)
     idadi = db.Column(db.Integer, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id', name='fk_store_user_id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id', name='fk_store_user_id'), nullable=False)
 
 class Madeni(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -71,7 +71,7 @@ class Mauzo(db.Model):
     b_bei_uza = db.Column(db.Integer, nullable=True, default=0)
     jumla = db.Column(db.Integer, nullable=True, default=0)
     bid_id = db.Column(db.Integer, db.ForeignKey('bidhaa.id', name='fk_mauzo_bid_id'), nullable=False, unique=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id', name='fk_mauzo_user_id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id', name='fk_mauzo_user_id'), nullable=False)
 
 class Mpishi(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -79,7 +79,7 @@ class Mpishi(db.Model):
     pondo = db.Column(db.Integer, nullable=False)
     idadi = db.Column(db.Integer, nullable=False)
     bid_id = db.Column(db.Integer, db.ForeignKey('bidhaa.id', name='fk_mpishi_bid_id'), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id', name='fk_mpishi_user_id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id', name='fk_mpishi_user_id'), nullable=False)
 
 class Mapato(db.Model):
     id = db.Column(db.Integer, primary_key=True)

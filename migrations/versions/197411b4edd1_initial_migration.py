@@ -1,19 +1,16 @@
 """Initial migration
 
-Revision ID: e820151d2877
+Revision ID: 197411b4edd1
 Revises: 
-Create Date: 2025-08-10 19:24:10.673554
+Create Date: 2025-08-10 19:41:59.977537
 
 """
-from werkzeug.security import generate_password_hash
-from sqlalchemy.sql import table, column
-from sqlalchemy import String, Integer, Boolean
 from alembic import op
 import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'e820151d2877'
+revision = '197411b4edd1'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -59,7 +56,7 @@ def upgrade():
     sa.ForeignKeyConstraint(['bid_id'], ['bidhaa.id'], name='fk_madeni_bid_id'),
     sa.PrimaryKeyConstraint('id')
     )
-    op.create_table('user',
+    op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=150), nullable=False),
     sa.Column('email', sa.String(length=150), nullable=False),
@@ -88,7 +85,7 @@ def upgrade():
     sa.Column('idadi', sa.Integer(), nullable=False),
     sa.Column('bei', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['user_id'], ['user.id'], name='fk_manunuzi_user_id'),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], name='fk_manunuzi_user_id'),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('mauzo',
@@ -100,7 +97,7 @@ def upgrade():
     sa.Column('bid_id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['bid_id'], ['bidhaa.id'], name='fk_mauzo_bid_id'),
-    sa.ForeignKeyConstraint(['user_id'], ['user.id'], name='fk_mauzo_user_id'),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], name='fk_mauzo_user_id'),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('bid_id')
     )
@@ -112,7 +109,7 @@ def upgrade():
     sa.Column('bid_id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['bid_id'], ['bidhaa.id'], name='fk_mpishi_bid_id'),
-    sa.ForeignKeyConstraint(['user_id'], ['user.id'], name='fk_mpishi_user_id'),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], name='fk_mpishi_user_id'),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('store',
@@ -121,37 +118,9 @@ def upgrade():
     sa.Column('units', sa.String(length=50), nullable=True),
     sa.Column('idadi', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['user_id'], ['user.id'], name='fk_store_user_id'),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], name='fk_store_user_id'),
     sa.PrimaryKeyConstraint('id')
     )
-    # Insert initial admin user
-     # Insert hardcoded admin user
-    user_table = table('user',
-        column('id', Integer),
-        column('name', String),
-        column('email', String),
-        column('is_active', Boolean),
-        column('position_as', String),
-        column('phone_no', String),
-        column('password', String),
-        column('shift_id', Integer)
-    )
-
-    op.bulk_insert(user_table,
-        [
-            {
-                'id': 1,
-                'name': 'Admin',
-                'email': 'anicetysanya@gmail.com',
-                'is_active': True,
-                'position_as': '',
-                'phone_no': '0000000000',
-                'password': generate_password_hash('sani'),
-                'shift_id': None
-            }
-        ]
-    )
-
     # ### end Alembic commands ###
 
 
@@ -162,7 +131,7 @@ def downgrade():
     op.drop_table('mauzo')
     op.drop_table('manunuzi_data')
     op.drop_table('uzalishaji')
-    op.drop_table('user')
+    op.drop_table('users')
     op.drop_table('madeni')
     op.drop_table('shift')
     op.drop_table('matumizi')
