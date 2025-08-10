@@ -104,6 +104,15 @@
 
         </li>
 
+        <li class="nav-item">
+            <a class="nav-link " href="{{url_for('users.b_store')}}" aria-expanded="false"
+                aria-controls="collapseUtilities">
+
+                <span>Store</span>
+            </a>
+
+        </li>
+
         <!-- Divider -->
         <hr class="sidebar-divider">
 
@@ -171,11 +180,22 @@
 
         </nav>
         <!-- End of Topbar -->
+        <div class="pt-3">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+        </div>
 
         <div class="container-fluid mt-4">
             <h1>Welcome {{current_user.name}}!</h1>
             <p class="small fw-bold mt-2 pt-1 mb-0">New Employee? <a href="{{url_for('auth.registerUser')}}"
-                  class="link-danger">Click To Register</a></p>
+                    class="link-danger">Click To Register</a></p>
 
             <!-- Matumizi -->
             <div class="card shadow mb-4">
@@ -193,7 +213,7 @@
                                     <th>Phone</th>
                                     <th>Role</th>
                                     <th>Status</th>
-                                    <th>Actions</th>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -202,16 +222,24 @@
                                 {% for user in users %}
                                 {% if user.id >= 2 %}
                                 <tr>
-                                <td>{{loop.index -1 }}</td>
-                                <td>{{user.name}}</td>
-                                <td>{{user.email}}</td>
-                                <td>{{user.phone_no}}</td>
-                                <td>{{user.position_as}}</td>
+                                    <td>{{loop.index -1 }}</td>
+                                    <td>{{user.name}}</td>
+                                    <td>{{user.email}}</td>
+                                    <td>{{user.phone_no}}</td>
+                                    <td>{{user.position_as}}</td>
 
-                                <td>{% if current_user.is_authenticated %}Online{% else %}Offline{% endif %}</td>
-                                <td><a href="/delete_account/{{user.id}}" class="btn btn-outline-dark">Delete</a>
-                                    <a href="/deactivate_account/{{user.id}}" class="btn btn-outline-dark">Pending</a></td>
+                                    <td>
+                                        <a href="/delete_account/{{ user.id }}" class="btn btn-outline-dark">Delete</a>
+                                        {% if user.is_active %}
+                                        <a href="/deactivate_account/{{ user.id }}"
+                                            class="btn btn-outline-dark">Pending</a>
+                                        {% else %}
+                                        <a href="/activate_account/{{ user.id }}"
+                                            class="btn btn-outline-dark">Resume</a>
+                                        {% endif %}
+                                    </td>
                                 </tr>
+
                                 {% endif %}
                                 {% endfor %}
                                 {% endif %}

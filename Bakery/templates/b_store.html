@@ -86,7 +86,7 @@
             </a>
 
         </li>
-        <li class="nav-item">
+        <li class="nav-item ">
             <a class="nav-link " href="{{url_for('users.b_mauzo')}}" aria-expanded="false"
                 aria-controls="collapseUtilities">
 
@@ -95,7 +95,7 @@
 
         </li>
 
-        <li class="nav-item active">
+        <li class="nav-item">
             <a class="nav-link " href="{{url_for('users.b_madeni')}}" aria-expanded="false"
                 aria-controls="collapseUtilities">
 
@@ -104,7 +104,7 @@
 
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item active">
             <a class="nav-link " href="{{url_for('users.b_store')}}" aria-expanded="false"
                 aria-controls="collapseUtilities">
 
@@ -195,52 +195,35 @@
         <div class="container-fluid mt-4">
             <h1>Welcome {{current_user.name}}!</h1>
 
+
             <!-- Matumizi -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3 text-center">
-                    <h3 class="m-0 font-weight-bold ">Madeni Na Malipo</h3>
+                    <h3 class="m-0 font-weight-bold ">Taarifa Ya Store</h3>
                 </div>
                 <div class="card-body">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>S/N</th>
-                                <th>Tarehe</th>
-                                <th>Majina</th>
-                                <th>Simu</th>
-                                <th>Bidhaa</th>
-                                <th>Bei (Tsh)</th>
-                                <th>Idadi </th>
-                                <th>Jumla (Tsh)</th>
-                                <th>Kiasi-Kilicholipwa</th>
-                                <th>Kiasi-Kilichobaki</th>
-                                <th>Status</th>
+                    <table class="table table-striped">
+                        <tr>
+                            <th>Tarehe</th>
+                            <th>Maligafi </th>
+                            <th>Units</th>
+                            <th>Idadi</th>
 
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for customer in md %}
-                            <tr>
-                                <td>{{ loop.index }}</td>
-                                <td>{{ customer.date }}</td>
-                                <td>{{ customer.name }}</td>
-                                <td>{{ customer.phone }}</td>
-                                <td>{{ customer.bid.b_name }}</td>
-                                <td>{{ customer.bid.b_bei }}</td>
-                                <td>{{customer.status}}</td>
-                                <td>{{customer.status * customer.bid.b_bei}}</td>
-                                <td>{{ customer.kiasi_kalipa }}</td>
-                                <td>{{ customer.kiasi_baki }}</td>
-                                {% if customer.kiasi_baki == 0 %}
-                                <td class="text-primary">Amelipa</td>
-                                {% else %}
-                                <td class="text-warning">Anadaiwa</td>
+                            <th>Jina</th>
+                        </tr>
+                        {% if strdsp %}
+                        {% for st in strdsp %}
+                        <tr>
+                            <td>{{ st.date }}</td>
+                            <td>{{ st.maligafi }}</td>
+                            <td>{{ st.units }}</td>
+                            <td>{{ st.idadi }}</td>
 
-                                {% endif %}
+                            <td>{{st.storekeeper.name}}</td>
+                        </tr>
+                        {% endfor %}
+                        {% endif %}
 
-                            </tr>
-                            {% endfor %}
-                        </tbody>
                     </table>
                 </div>
             </div>

@@ -104,6 +104,15 @@
 
         </li>
 
+        <li class="nav-item">
+            <a class="nav-link " href="{{url_for('users.b_store')}}" aria-expanded="false"
+                aria-controls="collapseUtilities">
+
+                <span>Store</span>
+            </a>
+
+        </li>
+
         <!-- Divider -->
         <hr class="sidebar-divider">
 
@@ -171,25 +180,38 @@
 
         </nav>
         <!-- End of Topbar -->
+        <div class="pt-3">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+        </div>
 
         <div class="container-fluid mt-4">
             <div class="d-flex">
-            <h2>Welcome {{current_user.name}}!</h2>
-                 <ul class="dropdown ms-auto">
-                        <a href="" class="dropdown-toggle fw-bold btn btn-outline"  role="button" data-bs-toggle="dropdown">Mapato Na Matumizi</a>
-                        <li class="dropdown-menu">
-                            <a href="" class="dropdown-item">a</a>
-                            <a href="" class="dropdown-item">b</a>
-                        </li>
-                    </ul>
-                </div>
+                <h2>Welcome {{current_user.name}}!</h2>
+                <ul class="dropdown ms-auto">
+                    <a href="" class="dropdown-toggle fw-bold btn btn-outline" role="button"
+                        data-bs-toggle="dropdown">Mapato Na Matumizi</a>
+                    <li class="dropdown-menu">
+                        {% for dt in date_range %}
+                        <a href="/mapato_matumizi/{{dt}}" class="dropdown-item">{{dt}}</a>
+                        {% endfor %}
+                    </li>
+                </ul>
+            </div>
             <!-- Mapato -->
             <div class="card shadow ">
                 <div class="card-header py-3">
                     <h3 class="m-0 font-weight-bold  text-center">Mapato</h3>
                 </div>
                 <div class="card-body">
-                    
+
                     <table class="table table-striped">
                         <tr>
 
@@ -199,18 +221,20 @@
                         </tr>
                         {% if mapato %}
                         {% for mpt in mapato %}
-                        
+                        {% if mpt.date == tarehe %}
                         <tr>
 
                             <td>{{mpt.aina}}</td>
                             <td>{{mpt.kiasi}}</td>
 
                         </tr>
+
+                        {% endif %}
                         {% endfor %}
                         {% endif %}
                         <tr>
                             <th>Jumla</th>
-                            <td>50000</td>
+                            <td>{{total}}</td>
                         </tr>
                     </table>
 
@@ -224,8 +248,8 @@
                     <h3 class="m-0 font-weight-bold  text-center">Matumizi</h3>
                 </div>
                 <div class="card-body">
-                   
-                    
+
+
                     <table class="table table-striped">
                         <tr>
 
@@ -235,17 +259,20 @@
                         </tr>
                         {% if matumizi %}
                         {% for mtz in matumizi %}
+                        {% if mtz.date == tarehe %}
                         <tr>
 
                             <td>{{mtz.aina}}</td>
                             <td>{{mtz.kiasi}}</td>
 
                         </tr>
+
+                        {% endif %}
                         {% endfor %}
                         {% endif %}
                         <tr>
                             <th>Jumla</th>
-                            <td>50000</td>
+                            <td>{{total}}</td>
                         </tr>
                     </table>
 

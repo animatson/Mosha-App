@@ -70,7 +70,8 @@
 
         <!-- Nav Item - Utilities Collapse Menu -->
         <li class="nav-item">
-            <a class="nav-link " href="{{url_for('users.b_manunuzi')}}" aria-expanded="false" aria-controls="collapseUtilities">
+            <a class="nav-link " href="{{url_for('users.b_manunuzi')}}" aria-expanded="false"
+                aria-controls="collapseUtilities">
 
                 <span>Manunuzi</span>
             </a>
@@ -78,14 +79,16 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link " href="{{url_for('users.b_uzalishaji')}}" aria-expanded="false" aria-controls="collapseUtilities">
+            <a class="nav-link " href="{{url_for('users.b_uzalishaji')}}" aria-expanded="false"
+                aria-controls="collapseUtilities">
 
                 <span>Uzalishaji</span>
             </a>
 
         </li>
         <li class="nav-item">
-            <a class="nav-link " href="{{url_for('users.b_mauzo')}}" aria-expanded="false" aria-controls="collapseUtilities">
+            <a class="nav-link " href="{{url_for('users.b_mauzo')}}" aria-expanded="false"
+                aria-controls="collapseUtilities">
 
                 <span>Mauzo</span>
             </a>
@@ -93,9 +96,19 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link " href="{{url_for('users.b_madeni')}}" aria-expanded="false" aria-controls="collapseUtilities">
+            <a class="nav-link " href="{{url_for('users.b_madeni')}}" aria-expanded="false"
+                aria-controls="collapseUtilities">
 
                 <span>Madeni</span>
+            </a>
+
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link " href="{{url_for('users.b_store')}}" aria-expanded="false"
+                aria-controls="collapseUtilities">
+
+                <span>Store</span>
             </a>
 
         </li>
@@ -110,7 +123,8 @@
 
         <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item">
-            <a class="nav-link " href="{{url_for('users.user_status')}}" aria-expanded="false" aria-controls="collapsePages">
+            <a class="nav-link " href="{{url_for('users.user_status')}}" aria-expanded="false"
+                aria-controls="collapsePages">
 
                 <span>User Status</span>
             </a>
@@ -166,35 +180,46 @@
 
         </nav>
         <!-- End of Topbar -->
+        <div class="pt-3">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+        </div>
 
         <div class="container-fluid mt-4">
             <h1>Welcome {{current_user.name}}!</h1>
-           
+
             <!-- Matumizi -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3 text-center">
                     <h3 class="m-0 font-weight-bold ">Aina Ya Bidhaa Na Bei Zake Sasa</h3>
                 </div>
                 <div class="card-body">
-                   
-                        <table class="table table-striped">
-                            <tr>
-                                <th>Jina La Bidhaa</th>
-                                <th>Bei ya Bidhaa (Tsh)</th>
-                                
-                            </tr>
-                            {% if bid %}
-                            {% for bd in bid %}
-                            <tr>
-                                <td>{{ bd.b_name }}</td>
-                                <td>{{ bd.b_bei }}</td>
-                                
-                            </tr>
-                            {% endfor %}
-                            {% endif %}
 
-                        </table>
-                 
+                    <table class="table table-striped">
+                        <tr>
+                            <th>Jina La Bidhaa</th>
+                            <th>Bei ya Bidhaa (Tsh)</th>
+
+                        </tr>
+                        {% if bid %}
+                        {% for bd in bid %}
+                        <tr>
+                            <td>{{ bd.b_name }}</td>
+                            <td>{{ bd.b_bei }}</td>
+
+                        </tr>
+                        {% endfor %}
+                        {% endif %}
+
+                    </table>
+
                 </div>
             </div>
         </div>

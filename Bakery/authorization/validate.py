@@ -6,7 +6,7 @@ def admin_required(f):
         if session["user_id"] == 1 or session["user_id"] == 2:
             return f()
         else:
-            flash('Login to access this route','warning')
+            flash('Login To Access ','warning')
             return redirect(url_for('auth.index')) 
     return wrapper
 def mauzo_required(f):
@@ -15,7 +15,7 @@ def mauzo_required(f):
         if session.get("position_as")  == "Mauzo":
             return f()
         else:
-            flash('Login to access this route','warning')
+            flash('Login To Access ','warning')
             return redirect(url_for('auth.index')) 
     return wrapper
 def manunuzi_required(f):
@@ -24,7 +24,7 @@ def manunuzi_required(f):
         if session.get("position_as") == "Manunuzi":
             return f()
         else:
-            flash('Login to access this route','warning')
+            flash('Login To Access this route','warning')
             return redirect(url_for('auth.index')) 
     return wrapper
 def mpishi_required(f):
@@ -33,7 +33,7 @@ def mpishi_required(f):
         if session.get("position_as") == "Mpishi":
             return f()
         else:
-            flash('Login to access this route','warning')
+            flash('Login To Access this route','warning')
             return redirect(url_for('auth.index')) 
     return wrapper
 def store_required(f):
@@ -42,6 +42,6 @@ def store_required(f):
         if session.get("position_as") == "Store":
             return f()
         else:
-            flash('Login to access this route','warning')
+            flash('Login To Access this route','warning')
             return redirect(url_for('auth.index')) 
     return wrapper

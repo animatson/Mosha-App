@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash,
 from .forms import RegistrationForm, LoginForm  # Assuming forms.py contains the form definitions
 from Bakery.database import User
 from Bakery.factory import db,bcrypt
-from flask_login import login_required, login_user, logout_user
+from flask_login import login_required, login_user, logout_user, current_user
 
 auth_bp = Blueprint('auth', __name__)
 
@@ -12,7 +12,7 @@ def index():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        if user and bcrypt.check_password_hash(user.password,form.password.data):
+        if user and bcrypt.check_password_hash(user.password,form.password.data) and user.is_active:
              login_user(user,remember=form.remember.data)
              #next = request.args.get('next')
 
@@ -44,7 +44,7 @@ def index():
                  flash("You are not allowed to access this page",'warning')
                  return redirect(url_for('auth.index'))
         else:
-            flash("Login Unsuccessfully check Email and Password",'warning')
+            flash("Login Unsuccessfully check Email and Password Or Maybe Deactivated",'warning')
     return render_template('login.html', title="login",form=form)
     
 
@@ -53,7 +53,7 @@ def registerUser():
     form = RegistrationForm()
     if form.validate_on_submit():
         hash_passwd = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = User(name=form.username.data,email=form.email.data,position_as=form.position.data,phone_no=form.phone.data,password=hash_passwd)
+        user = User(name=form.username.data,email=form.email.data,is_active=True,position_as=form.position.data,phone_no=form.phone.data,password=hash_passwd)
         db.session.add(user)
         db.session.commit()
         flash("User is successfully registered",'primary')
@@ -66,4 +66,6 @@ def logout():
     logout_user()
     flash("Logout Successfully",'info')
     return redirect(url_for('auth.index'))
+
+
             

@@ -1,9 +1,10 @@
-from flask import Blueprint, render_template, request,url_for,flash,redirect,session
+from flask import Blueprint, render_template, request,url_for,flash,redirect,session, make_response
 from .forms import (ManunuziForm,BidhaaForm,MauzoForm,Mabadiliko_BeiForm,LipaForm,MapatoForm,MatumiziForm,
                     UzalishajiForm,MadeniForm,MpishiForm,StoreForm)
 from Bakery.database import ManunuziData,Bidhaa,Uzalishaji,Mauzo,Madeni,Mpishi,Store,Mapato,Matumizi,User
 from Bakery.factory import db
 from flask_login import current_user, login_required
+from datetime import datetime, date, timedelta
 from Bakery.authorization.validate import manunuzi_required, mauzo_required, mpishi_required, admin_required, store_required
 
 users = Blueprint('users', __name__)
@@ -184,7 +185,12 @@ def store():
         
         #display on the screen 
         strdsp = Store.query.all()
-        return render_template('store.html', form=form, strdsp=strdsp)
+        response = make_response(render_template('store.html', form=form, strdsp=strdsp))
+        # prevent browser from caching
+        response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+        response.headers['Pragma'] = 'no-cache'
+        response.headers['Expires'] = '0'
+        return response
 
 @users.route('/B_bei/<int:id>',methods=['GET','POST'])
 @login_required
@@ -222,9 +228,18 @@ def lipa(id):
 @login_required
 @admin_required
 def boss():
+
+    #get Mapato and Matumizi data all 
     mapato = Mapato.query.order_by(Mapato.date.desc()).all()
     matumizi = Matumizi.query.order_by(Matumizi.date.desc()).all()
-    return render_template('boss.html',mapato=mapato,matumizi=matumizi)
+
+    # Get 7 days before today + today
+    today = date.today()
+    
+    date_range = [(today - timedelta(days=i)) for i in range(7)]
+    date_range.remove(today)
+
+    return render_template('boss.html',mapato=mapato,matumizi=matumizi,date_range=date_range,tarehe=today)
     
 @users.route('/b_bidhaa', methods=['GET', 'POST'])
 @login_required
@@ -232,6 +247,13 @@ def boss():
 def b_bidhaa():
     bid = Bidhaa.query.all()
     return render_template('b_bidhaa.html',bid=bid)
+
+@users.route('/b_store', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def b_store():
+    strdsp = Store.query.all()
+    return render_template('b_store.html',strdsp=strdsp)
 
 @users.route('/b_manunuzi', methods=['GET', 'POST'])
 @login_required
@@ -246,6 +268,16 @@ def deactivate_account(id):
     #current_user.is_active = False
     user = User.query.get_or_404(id)
     user.is_active = False
+    db.session.commit()
+    return redirect(url_for('users.user_status'))
+
+@users.route('/activate_account/<int:id>', methods=['GET', 'POST'])
+@login_required
+def activate_account(id):
+    #current_user.is_active = False
+    user = User.query.get_or_404(id)
+    user.is_active = True
+    db.session.commit()
     return redirect(url_for('users.user_status'))
 
 @users.route('/delete_account/<int:id>', methods=['GET', 'POST'])
@@ -300,3 +332,13 @@ def matumizi():
         flash('Matumizi yamehifadhiwa','info')
         return redirect(url_for('users.mauzo'))
     return render_template('matumizi.html', form=form)
+
+@users.route('/mapato_matumizi/<tarehe>', methods=['GET', 'POST'])
+@login_required
+def mapato_matumizi(tarehe):
+    #get Mapato and Matumizi data all 
+    mapato = Mapato.query.order_by(Mapato.date.desc()).all()
+    matumizi = Matumizi.query.order_by(Matumizi.date.desc()).all()
+    total = 0
+
+    return render_template('mapato_matumizi.html',mapato=mapato,matumizi=matumizi,tarehe=tarehe,total=total)
