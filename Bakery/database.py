@@ -12,7 +12,7 @@ class Users(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(150), nullable=False)
     email = db.Column(db.String(150), unique=True, nullable=False)
-    is_active = db.Column(Boolean, nullable=False, server_default=text('0'))  # default False
+    is_active = db.Column(Boolean, nullable=False, server_default=text('FALSE'))  # default False
     position_as = db.Column(db.String(150), nullable=True)
     phone_no = db.Column(db.String(20), nullable=False, server_default="0000000000")  # string with default
     password = db.Column(db.String(150), nullable=False)
