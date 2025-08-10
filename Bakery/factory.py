@@ -1,4 +1,4 @@
-from flask_migrate import Migrate
+from flask_migrate import Migrate,upgrade
 from flask import Flask, redirect, url_for, flash
 import os
 from flask_sqlalchemy import SQLAlchemy
@@ -49,7 +49,9 @@ def create_app():
 app = create_app()
 
 # Optional: If you need to initialize db with app context for shell or migrations
-#with app.app_context():
+with app.app_context():
+    upgrade()
+
 #    db.create_all() # Only run this if you want to create tables on app start,
                       # usually handled by migrations or separate script.
 
