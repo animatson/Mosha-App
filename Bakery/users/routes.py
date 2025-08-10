@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request,url_for,flash,redirect,session, make_response
 from .forms import (ManunuziForm,BidhaaForm,MauzoForm,Mabadiliko_BeiForm,LipaForm,MapatoForm,MatumiziForm,
                     UzalishajiForm,MadeniForm,MpishiForm,StoreForm)
-from Bakery.database import ManunuziData,Bidhaa,Uzalishaji,Mauzo,Madeni,Mpishi,Store,Mapato,Matumizi,User
+from Bakery.database import ManunuziData,Bidhaa,Uzalishaji,Mauzo,Madeni,Mpishi,Store,Mapato,Matumizi,Users
 from Bakery.factory import db
 from flask_login import current_user, login_required
 from datetime import datetime, date, timedelta
@@ -266,7 +266,7 @@ def b_manunuzi():
 @login_required
 def deactivate_account(id):
     #current_user.is_active = False
-    user = User.query.get_or_404(id)
+    user = Users.query.get_or_404(id)
     user.is_active = False
     db.session.commit()
     return redirect(url_for('users.user_status'))
@@ -275,7 +275,7 @@ def deactivate_account(id):
 @login_required
 def activate_account(id):
     #current_user.is_active = False
-    user = User.query.get_or_404(id)
+    user = Users.query.get_or_404(id)
     user.is_active = True
     db.session.commit()
     return redirect(url_for('users.user_status'))
@@ -284,7 +284,7 @@ def activate_account(id):
 @login_required
 def delete_account(id):
     #current_user.is_active = False
-    user = User.query.get_or_404(id)
+    user = Users.query.get_or_404(id)
     db.session.delete(user)
     db.session.commit()
     return redirect(url_for('users.user_status'))
@@ -317,7 +317,7 @@ def b_madeni():
 @login_required
 @admin_required
 def user_status():
-    users = User.query.all()
+    users = Users.query.all()
     return render_template('user_status.html',users=users)
 
 @users.route('/matumizi', methods=['GET', 'POST'])

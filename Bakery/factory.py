@@ -24,7 +24,7 @@ def create_app():
     # Initialize extensions with the app
     db.init_app(app)
     # Import your models here so Flask-Migrate can detect them
-    from .database import User, ManunuziData, Bidhaa, Store, Madeni, Uzalishaji, Mauzo, Mpishi, Mapato, Matumizi, Shift  # replace with your actual model class names
+    from .database import Users, ManunuziData, Bidhaa, Store, Madeni, Uzalishaji, Mauzo, Mpishi, Mapato, Matumizi, Shift  # replace with your actual model class names
     
     migrate.init_app(app, db)
     bcrypt.init_app(app)
