@@ -1,3 +1,4 @@
+
 """Initial migration
 
 Revision ID: d517658fcb61
@@ -5,6 +6,9 @@ Revises:
 Create Date: 2025-08-10 18:37:25.607602
 
 """
+from werkzeug.security import generate_password_hash
+from sqlalchemy.sql import table, column
+from sqlalchemy import String, Integer, Boolean
 from alembic import op
 import sqlalchemy as sa
 
@@ -31,6 +35,34 @@ def upgrade():
         batch_op.add_column(sa.Column('phone_no', sa.String(length=20), server_default='0000000000', nullable=False))
         batch_op.add_column(sa.Column('shift_id', sa.Integer(), nullable=True))
         batch_op.create_foreign_key('fk_user_shift_id', 'shift', ['shift_id'], ['id'])
+
+    # Insert hardcoded admin user
+    user_table = table('user',
+        column('id', Integer),
+        column('name', String),
+        column('email', String),
+        column('is_active', Boolean),
+        column('position_as', String),
+        column('phone_no', String),
+        column('password', String),
+        column('shift_id', Integer)
+    )
+
+    op.bulk_insert(user_table,
+        [
+            {
+                'id': 1,
+                'name': 'Admin',
+                'email': 'anicetysanya@gmail.com',
+                'is_active': True,
+                'position_as': '',
+                'phone_no': '0000000000',
+                'password': generate_password_hash('sani'),
+                'shift_id': None
+            }
+        ]
+    )
+
 
     # ### end Alembic commands ###
 
