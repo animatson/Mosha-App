@@ -96,4 +96,4 @@ class Matumizi(db.Model):
 class Shift(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255))
-    employees = db.relationship('User', backref='my_shift', lazy=True)
+    employees = db.relationship('Users', backref='my_shift', lazy=True)
